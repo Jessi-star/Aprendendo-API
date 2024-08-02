@@ -15,7 +15,7 @@ async function middlewareGetAnimeById(req, res, next) {
     next();
 }
 
-function middlewareInsertAnime(req, res, next) {
+async function middlewareInsertAnime(req, res, next) {
     const {
         nome,
         ano,
@@ -28,7 +28,8 @@ function middlewareInsertAnime(req, res, next) {
         return res.status(400).send("Dados incompletos");
     }
 
-    const anime = listaAnimes.find(anime => anime.nome === nome);
+    const anime = await animesModel.getAllAnimeByNameModel(nome);
+
 
     if (anime) {
         return res.status(400).send("Anime já cadastrado");

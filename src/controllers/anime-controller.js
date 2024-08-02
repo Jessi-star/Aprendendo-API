@@ -14,7 +14,7 @@ async function getAnimeById(req, res) {
     return res.send(anime);
 }
 
-function insetAnime(req, res) {
+async function insetAnime(req, res) {
     const { 
             nome,
             ano,
@@ -24,20 +24,16 @@ function insetAnime(req, res) {
             imagem,
             sinopse
             } = req.body;
-            
-        const id = listaAnimes[listaAnimes.length - 1].id + 1;
-
-    const anime = listaAnimes.push(
-        id,
-        nome,
-        ano,
-        nota,
-        genero,
-        episodios,
-        imagem,
-        sinopse
+          
+        await animesModel.insertAnimeModel(
+            nome,
+            ano,
+            nota,
+            genero,
+            episodios,
+            imagem,
+            sinopse
         );
-    
 
     res.status(201).send("Anime inserido com sucesso");
 }
